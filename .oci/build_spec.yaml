@@ -39,5 +39,5 @@ steps:
   - type: Command
     name: Build Docker Image
     command: |
-      sudo docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
-      sudo docker image
+      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
+      docker image
