@@ -20,11 +20,24 @@ steps:
   - type: Command
     name: Debug Variables
     command: |
-      echo "OCI_REGISTRY: ${OCI_REGISTRY}"
+      echo "OCI_REGISTRY: ${REGISTRY}"
       echo "TENANCY_NAMESPACE: ${TENANCY_NAMESPACE}"
       echo "BUILD RUN NUMBER: ${OCI_BUILD_RUN_NUMBER}"
 
   - type: Command
+    name: Start Docker
+    command: |
+      sudo systemctl start docker
+      sudo systemctl status docker
+  
+  - type: Command
+    name: Test Network Connectivity
+    command: |
+      ping -c 3 ${REGISTRY}
+      curl -v https://${REGISTRY}
+
+  - type: Command
     name: Build Docker Image
     command: |
-      docker build -t ${OCI_REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
+      sudo docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
+      sudo docker image
