@@ -27,6 +27,7 @@ steps:
   - type: Command
     name: Start Docker
     command: |
+      sudo yum install -y docker
       sudo systemctl start docker
       sudo systemctl status docker
   
