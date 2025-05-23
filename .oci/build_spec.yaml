@@ -28,8 +28,3 @@ steps:
     name: Build Docker Image
     command: |
       docker build -t ${OCI_REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
-
-  - type: Command
-    name: Push to Container Registry
-    imageName: flask-app
-    imageTag: ${OCI_BUILD_RUN_NUMBER}
