@@ -11,12 +11,25 @@ steps:
       pip3 install -r app/requirements.txt pytest
       python3 --version
       pip3 --version
+
   - type: Command
     name: Run Tests
     command: |
       pytest tests/ --cov=app --junitxml=test-results/results.xml
+
   - type: Command
-    name: Build Artifact
+    name: Debug Variables
     command: |
-      mkdir -p artifact/
-      cp -r app/ artifact/
+      echo "OCI_REGISTRY: ${OCI_REGISTRY}"
+      echo "TENANCY_NAMESPACE: ${TENANCY_NAMESPACE}"
+      echo "BUILD RUN NUMBER: ${OCI_BUILD_RUN_NUMBER}"
+
+  - type: Command
+    name: Build Docker Image
+    command: |
+      docker build -t ${OCI_REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
+
+  - type: OciRegistryPush
+    name: Push to Container Registry
+    imageName: flask-app
+    imageTag: ${OCI_BUILD_RUN_NUMBER}
