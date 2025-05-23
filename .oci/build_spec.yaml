@@ -29,12 +29,6 @@ steps:
     command: |
       docker --version
       which docker
-
-  - type: Command
-    name: Start Docker
-    command: |
-      sudo systemctl start docker
-      sudo systemctl status docker
   
   - type: Command
     name: Test Network Connectivity
