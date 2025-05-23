@@ -11,3 +11,12 @@ steps:
       pip3 install -r app/requirements.txt
       python3 --version
       pip3 --version
+  - type: Command
+    name: Run Tests
+    command: |
+      pytest tests/ --cov=app --junitxml=test-results/results.xml
+  - type: Build Artifact
+    name: Deploy
+    command: |
+      mkdir -p artifact/
+      cp -r app/ artifact/
