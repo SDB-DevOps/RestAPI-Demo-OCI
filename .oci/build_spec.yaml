@@ -33,11 +33,11 @@ steps:
   - type: Command
     name: Build Docker Image
     command: |
-      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER} .
+      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:latest .
       docker image
 
   - type: Command
     name: Push to Container Registry
     command: |
       echo $AUTH_TOKEN | docker login ${REGISTRY} -u "${USERNAME}" --password-stdin
-      docker push ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
+      docker push ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:latest
