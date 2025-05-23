@@ -7,7 +7,7 @@ steps:
     name: Build
     description: Install Dependencies
     command: |
-      sudo yum install -y python3 python3-pip
+      sudo yum install -y python3 python3-pip docker
       pip3 install -r app/requirements.txt pytest
       python3 --version
       pip3 --version
@@ -27,9 +27,8 @@ steps:
   - type: Command
     name: Start Docker
     command: |
-      sudo yum install -y docker
-      sudo systemctl start docker
-      sudo systemctl status docker
+      systemctl start docker
+      systemctl status docker
   
   - type: Command
     name: Test Network Connectivity
@@ -40,5 +39,5 @@ steps:
   - type: Command
     name: Build Docker Image
     command: |
-      sudo docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
-      sudo docker image
+      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
+      docker image
