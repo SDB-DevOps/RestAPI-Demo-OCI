@@ -2,32 +2,13 @@ version: 0.1
 component: build
 timeoutInSeconds: 1800
 
-env:
-  variables:
-    PYTHON_VERSION: "3.9"
-
-steps:
-  - type: Command
-    name: Install Python
-    command: ｜
-      sudo yum install -y python36 python36-devel
-      sudo yum install -y python36-pip
-    when:
-      branch:
-        equals:
-          - main
-          - develop
-  - type: Command
-    name: Install Dependencies
-    command: ｜
-      pip install -r app/requirements.txt
-  - type: Command
-    name: Package Application
-    command: ｜
-      mkdir -p artifacts
-      cp -r . artifacts/
-
-outputArtifacts:
-  - name: flask_app_latest_image
-    type: DOCKER_IMAGE
-    location: output
+stages:
+  - name: Build
+    steps:
+      - type: Command
+        name: Install Dependencies
+        command: |
+          sudo yum install -y python3 python3-pip
+          pip3 install -r app/requirements.txt
+          python3 --version
+          pip3 --version
