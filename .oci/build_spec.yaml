@@ -15,8 +15,8 @@ steps:
     name: Run Tests
     command: |
       pytest tests/ --cov=app --junitxml=test-results/results.xml
-  - type: Build Artifact
-    name: Deploy
+  - type: Command
+    name: Build Artifact
     command: |
       mkdir -p artifact/
       cp -r app/ artifact/
