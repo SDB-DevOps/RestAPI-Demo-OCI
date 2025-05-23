@@ -29,6 +29,6 @@ steps:
       cp -r . artifacts/
 
 artifacts:
-  - name: flask-app
-    type: zip
-    path: artifacts/
+  files:
+    - '**/*'
+  name: flask-app-$(date +%Y-%m-%d).zip
