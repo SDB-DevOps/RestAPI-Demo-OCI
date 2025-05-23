@@ -9,9 +9,9 @@ env:
 steps:
   - type: Command
     name: Install Python
-    command:
-      - sudo yum install -y python36 python36-devel
-      - sudo yum install -y python36-pip
+    command: ｜
+      sudo yum install -y python36 python36-devel
+      sudo yum install -y python36-pip
     when:
       branch:
         equals:
@@ -19,13 +19,13 @@ steps:
           - develop
   - type: Command
     name: Install Dependencies
-    command:
-      - pip install -r app/requirements.txt
+    command: ｜
+      pip install -r app/requirements.txt
   - type: Command
     name: Package Application
-    command:
-      - mkdir -p artifacts
-      - cp -r . artifacts/
+    command: ｜
+      mkdir -p artifacts
+      cp -r . artifacts/
 
 outputArtifacts:
   - name: flask_app_latest_image
