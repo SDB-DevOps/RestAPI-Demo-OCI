@@ -25,6 +25,12 @@ steps:
       echo "BUILD RUN NUMBER: ${OCI_BUILD_RUN_NUMBER}"
 
   - type: Command
+    name: Check Docker Installation
+    command: |
+      docker --version
+      which docker
+
+  - type: Command
     name: Start Docker
     command: |
       systemctl start docker
