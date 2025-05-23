@@ -33,8 +33,8 @@ steps:
   - type: Command
     name: Start Docker
     command: |
-      systemctl start docker
-      systemctl status docker
+      sudo systemctl start docker
+      sudo systemctl status docker
   
   - type: Command
     name: Test Network Connectivity
@@ -45,5 +45,5 @@ steps:
   - type: Command
     name: Build Docker Image
     command: |
-      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
-      docker image
+      sudo docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
+      sudo docker image
