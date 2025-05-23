@@ -39,34 +39,5 @@ steps:
   - type: Command
     name: Push to Container Registry
     command: |
-      echo $OCI_AUTH_TOKEN | docker login ${REGISTRY} -u "${OCI_USERNAME}" --password-stdin
+      echo $AUTH_TOKEN | docker login ${REGISTRY} -u "${USERNAME}" --password-stdin
       docker push ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}
-
-  - type: Command
-    name: Deploy to Container Instance
-    command: |
-      # 创建部署配置文件
-      cat > container-instance.json << EOF
-      {
-        "compartmentId": "${COMPARTMENT_OCID}",
-        "displayName": "flask-app-instance",
-        "shape": "VM.Standard.E2.1.Micro",
-        "containers": [
-          {
-            "displayName": "flask-app",
-            "imageUrl": "${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:${OCI_BUILD_RUN_NUMBER}",
-            "ports": [{"containerPort": 5000, "hostPort": 5000}],
-            "startCommand": ["flask", "run", "--host=0.0.0.0", "--port=5000"]
-          }
-        ],
-        "vnics": [
-          {
-            "subnetId": "${SUBNET_OCID}",
-            "assignPublicIp": true
-          }
-        ]
-      }
-      EOF
-
-      # 创建或更新容器实例
-      oci container-instances container-instance create --from-json file://container-instance.json
