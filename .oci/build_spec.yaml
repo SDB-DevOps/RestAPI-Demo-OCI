@@ -28,7 +28,6 @@ steps:
       mkdir -p artifacts
       cp -r . artifacts/
 
-artifacts:
-  files:
-    - '**/*'
-  name: flask-app-$(date +%Y-%m-%d).zip
+outputArtifacts:
+  - name: flask_app_latest_image
+    type: zip
