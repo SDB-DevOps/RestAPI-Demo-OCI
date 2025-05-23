@@ -30,4 +30,5 @@ steps:
 
 outputArtifacts:
   - name: flask_app_latest_image
-    type: zip
+    type: DOCKER_IMAGE
+    location: output
