@@ -45,7 +45,7 @@ steps:
 outputArtifacts:
   - name: flask_app_latest_image
     type: DOCKER_IMAGE
-    location: flask-app:latest
+    location: nrt.ocir.io/nrcfeuv8jnfa/flask-app:latest
   
 
 
