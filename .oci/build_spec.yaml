@@ -43,9 +43,9 @@ steps:
       docker push ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:latest
 
 outputArtifacts:
-  - name: golan_app_latest_image
+  - name: flask_app_latest_image
     type: DOCKER_IMAGE
-    location: RestAPI-Demo-OCI:latest
+    location: flask-app:latest
   
 
 
