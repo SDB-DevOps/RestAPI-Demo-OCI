@@ -41,3 +41,11 @@ steps:
     command: |
       echo $AUTH_TOKEN | docker login ${REGISTRY} -u "${TENANCY_NAMESPACE}/${USERNAME}" --password-stdin
       docker push ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:latest
+
+outputArtifacts:
+  - name: golan_app_latest_image
+    type: DOCKER_IMAGE
+    location: RestAPI-Demo-OCI:latest
+  
+
+
