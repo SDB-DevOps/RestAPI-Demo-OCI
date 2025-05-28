@@ -70,6 +70,21 @@ steps:
       # 从源仓库拉取镜像
       docker pull ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/flask-app:latest
       docker images | grep ${SOURCE_REPO_NAME}
+    # 新增加的config DNS 
+  - type: Command
+    name: Configure DNS
+    command: |
+      echo "options timeout:1 attempts:2" >> /etc/resolv.conf
+      echo "nameserver 8.8.8.8" >> /etc/resolv.conf
+
+  - type: Command
+    name: Login to Artifact Registry
+    command: |
+      echo "$AUTH_TOKEN" | docker login \
+        nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com \
+        -u "${OCI_USERNAME}" \
+        --password-stdin
+
 
   - type: Command
     name: Retag Image for Artifact Registry
