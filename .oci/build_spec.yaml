@@ -80,9 +80,9 @@ steps:
   - type: Command
     name: Login to Artifact Registry
     command: |
-      echo "$AUTH_TOKEN" | docker login \
+      echo $AUTH_TOKEN | docker login \
         nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com \
-        -u "${OCI_USERNAME}" \
+        -u ${USERNAME} \
         --password-stdin
 
 
