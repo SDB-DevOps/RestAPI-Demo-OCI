@@ -5,7 +5,7 @@ timeoutInSeconds: 1800
 env:
   variables:
     # 源仓库配置（Container Registry）
-    SOURCE_REGION: "ap-tokyo-1"  # 替换为你的源区域（如 iad, phx, fra 等）
+    SOURCE_REGION: "nrt"  # 替换为你的源区域（如 iad, phx, fra 等）
     SOURCE_TENANCY_NAMESPACE: "nrcfeuv8jnfa"  # 替换为你的租户Namespace
     SOURCE_REPO_NAME: "flask-app"  # 替换为源仓库名称
     SOURCE_IMAGE_TAG: "latest"  # 替换为镜像标签
