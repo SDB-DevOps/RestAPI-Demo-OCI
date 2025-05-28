@@ -62,6 +62,7 @@ steps:
     command: |
       # 从源仓库拉取镜像
       docker pull ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:${SOURCE_IMAGE_TAG}
+      docker images | grep ${SOURCE_REPO_NAME}
 
   - type: Command
     name: Retag Image for Artifact Registry
