@@ -15,6 +15,7 @@ env:
     TARGET_TENANCY_NAMESPACE: "nrcfeuv8jnfa"  # 通常与源相同
     TARGET_REPO_NAME: "artifact-repository-sdb"  # 替换为目标仓库名称
 
+    OCI_USERNAME: "rui.br.bao@ibm.com"
 
 steps:
   - type: Command
@@ -69,6 +70,14 @@ steps:
       docker tag \
         "${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:${SOURCE_IMAGE_TAG}" \
         "${SOURCE_REGION}.artifacts.${TARGET_REGION}.oci.oraclecloud.com/${TARGET_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}:${SOURCE_IMAGE_TAG}"
+
+
+  - type: Command
+    name: "Login to Artifact Registry"
+    command: |
+      # 显式指定域名解析超时时间
+      echo "nameserver 8.8.8.8" > /etc/resolv.conf  # 临时使用公共DNS（测试用）
+      echo "${AUTH_TOKEN}" | docker login -u "nrcfeuv8jnfa/${OCI_USERNAME}" nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com
 
   - type: Command
     name: "Push Image to Artifact Registry"
