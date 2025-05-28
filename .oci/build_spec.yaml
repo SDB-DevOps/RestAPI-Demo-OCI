@@ -41,19 +41,6 @@ steps:
       echo "nameserver 8.8.4.4" >> /etc/resolv.conf
 
   - type: Command
-    name: Test Connectivity
-    command: |
-      nslookup nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com
-      curl -I https://nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com/v2/
-  
-  - type: Command
-    name: Network Debug
-    command: |
-      cat /etc/resolv.conf
-      ip route
-      nslookup artifacts.ap-tokyo-1.oci.oraclecloud.com
-
-  - type: Command
     name: Debug Variables
     command: |
       echo "OCI_REGISTRY: ${REGISTRY}"
