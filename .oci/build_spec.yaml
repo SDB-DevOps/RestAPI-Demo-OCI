@@ -13,7 +13,7 @@ env:
     # 目标仓库配置（Artifact Registry）
     TARGET_REGION: "ap-tokyo-1"  # 替换为目标区域（如 us-ashburn-1）
     TARGET_TENANCY_NAMESPACE: "nrcfeuv8jnfa"  # 通常与源相同
-    TARGET_REPO_NAME: "artifact-repository-SDB"  # 替换为目标仓库名称
+    TARGET_REPO_NAME: "artifact-repository-sdb"  # 替换为目标仓库名称
 
 
 steps:
@@ -79,7 +79,7 @@ steps:
 
 
 outputArtifacts:
-  - name: artifact-repository-SDB
+  - name: artifact-repository-sdb
     type: DOCKER_IMAGE
     location: nrt.ocir.io/nrcfeuv8jnfa/flask-app:latest
   
