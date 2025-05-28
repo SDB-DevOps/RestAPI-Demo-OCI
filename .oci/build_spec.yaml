@@ -8,7 +8,6 @@ env:
     SOURCE_REGION: "nrt"  # 替换为你的源区域（如 iad, phx, fra 等）
     SOURCE_TENANCY_NAMESPACE: "nrcfeuv8jnfa"  # 替换为你的租户Namespace
     SOURCE_REPO_NAME: "flask-app"  # 替换为源仓库名称
-    SOURCE_IMAGE_TAG: "v0.1"  # 替换为镜像标签
 
     # 目标仓库配置（Artifact Registry）
     TARGET_REGION: "ap-tokyo-1"  # 替换为目标区域（如 us-ashburn-1）
@@ -48,33 +47,33 @@ steps:
   - type: Command
     name: Build Docker Image
     command: |
-      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:${SOURCE_IMAGE_TAG} .
+      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:latest .
       docker image
 
   - type: Command
     name: Push to Container Registry
     command: |
       echo $AUTH_TOKEN | docker login ${REGISTRY} -u "${TENANCY_NAMESPACE}/${USERNAME}" --password-stdin
-      docker push ${REGISTRY}/${TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:${SOURCE_IMAGE_TAG}
+      docker push ${REGISTRY}/${TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:latest
 
   - type: Command
     name: Pull Image from OCIR
     command: |
       # 从源仓库拉取镜像
-      docker pull ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:${SOURCE_IMAGE_TAG}
+      docker pull ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:latest
       docker images | grep ${SOURCE_REPO_NAME}
 
   - type: Command
     name: Retag Image for Artifact Registry
     command: |
       # 重打标签（指向Artifact Registry）
-      docker tag ${SOURCE_REPO_NAME} ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:${SOURCE_IMAGE_TAG}
+      docker tag ${SOURCE_REPO_NAME} ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:latest
 
   - type: Command
     name: Push Image to Artifact Registry
     command: |
       # 推送镜像到目标仓库
-      docker push ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:${SOURCE_IMAGE_TAG}
+      docker push ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:latest
 
 outputArtifacts:
   - name: artifact-repository-sdb
