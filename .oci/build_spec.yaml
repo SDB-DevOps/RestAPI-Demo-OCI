@@ -68,16 +68,13 @@ steps:
     name: Retag Image for Artifact Registry
     command: |
       # 重打标签（指向Artifact Registry）
-      docker tag \
-        ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:${SOURCE_IMAGE_TAG} \
-        ${SOURCE_REGION}.artifacts.${TARGET_REGION}.oci.oraclecloud.com/${TARGET_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}:${SOURCE_IMAGE_TAG}
-
+      docker tag ${SOURCE_REPO_NAME}:${SOURCE_IMAGE_TAG} ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:${SOURCE_IMAGE_TAG}
 
   - type: Command
     name: Push Image to Artifact Registry
     command: |
       # 推送镜像到目标仓库
-      docker push ${SOURCE_REGION}.artifacts.${TARGET_REGION}.oci.oraclecloud.com/${TARGET_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}:${SOURCE_IMAGE_TAG}
+      docker push ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:${SOURCE_IMAGE_TAG}
 
 outputArtifacts:
   - name: artifact-repository-sdb
