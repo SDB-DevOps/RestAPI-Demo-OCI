@@ -77,8 +77,9 @@ steps:
       # 重打标签（指向Artifact Registry）
       # docker tag flask-app:latest ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}/flask-app:latest
       docker tag \
-        "${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/flask-app:latest" \
-        "${SOURCE_REGION}.artifacts.ap-tokyo-1.oci.oraclecloud.com/${SOURCE_TENANCY_NAMESPACE}/flask-app:latest"
+        ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/flask-app:latest \
+        ${SOURCE_REGION}.artifacts.ap-tokyo-1.oci.oraclecloud.com/${SOURCE_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}:latest
+      # "${SOURCE_REGION}.artifacts.ap-tokyo-1.oci.oraclecloud.com/${SOURCE_TENANCY_NAMESPACE}/flask-app:latest"
 
   - type: Command
     name: Verify Tag
