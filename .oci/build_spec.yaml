@@ -83,8 +83,9 @@ steps:
     name: Push Image to Artifact Registry
     command: |
       # 推送镜像到目标仓库
-      docker push ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}/flask-app:latest
-
+      # docker push ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}/flask-app:latest
+        docker push ${SOURCE_REGION}.artifacts.ap-tokyo-1.oci.oraclecloud.com/${SOURCE_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}:latest
+        
 outputArtifacts:
   - name: artifact-repository-sdb
     type: DOCKER_IMAGE
