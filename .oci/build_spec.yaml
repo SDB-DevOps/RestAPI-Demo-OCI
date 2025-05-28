@@ -33,11 +33,25 @@ steps:
     command: |
       pytest tests/ --cov=app --junitxml=test-results/results.xml
 
-  # 设置 nameserver
+  # 设置 nameserver 和获取网络信息
   - type: Command
     name: Configure DNS
     command: |
       echo "nameserver 8.8.8.8" > /etc/resolv.conf
+      echo "nameserver 8.8.4.4" >> /etc/resolv.conf
+      ping -c 4 nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com
+
+  - type: Command
+    name: Test Connectivity
+    command: |
+      nslookup nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com
+      curl -I https://nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com/v2/
+  - type: Command
+    name: Network Debug
+    command: |
+      cat /etc/resolv.conf
+      ip route
+      nslookup artifacts.ap-tokyo-1.oci.oraclecloud.com
 
   - type: Command
     name: Debug Variables
@@ -82,7 +96,7 @@ steps:
     command: |
       echo $AUTH_TOKEN | docker login \
         nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com \
-        -u ${USERNAME} \
+        -u "nrcfeuv8jnfa/rui.br.bao@ibm.com" \
         --password-stdin
 
 
