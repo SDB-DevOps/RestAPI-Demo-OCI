@@ -33,6 +33,12 @@ steps:
     command: |
       pytest tests/ --cov=app --junitxml=test-results/results.xml
 
+  # 设置 nameserver
+  - type: Command
+    name: Configure DNS
+    command: |
+      echo "nameserver 8.8.8.8" > /etc/resolv.conf
+
   - type: Command
     name: Debug Variables
     command: |
