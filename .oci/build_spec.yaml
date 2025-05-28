@@ -77,7 +77,7 @@ steps:
     command: |
       # 推送镜像到目标仓库
       # docker push "${SOURCE_REGION}.artifacts.${TARGET_REGION}.oci.oraclecloud.com/${TARGET_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}:${SOURCE_IMAGE_TAG}"
-      docker push "nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com/nrcfeuv8jnfa/artifact-repository-sdb:v3"
+      docker push nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com/artifact-repository-sdb:v3
 
 
 
