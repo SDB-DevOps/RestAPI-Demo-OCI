@@ -69,7 +69,15 @@ steps:
     name: Retag Image for Artifact Registry
     command: |
       # 重打标签（指向Artifact Registry）
-      docker tag flask-app:latest ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}/flask-app:1.0
+      # docker tag flask-app:latest ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}/flask-app:1.0
+      docker tag \
+        "${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/flask-app:1.0" \
+        "${SOURCE_REGION}.artifacts.ap-tokyo-1.oci.oraclecloud.com/${SOURCE_TENANCY_NAMESPACE}/flask-app:1.0"
+
+  - type: Command
+    name: Verify Tag
+    command: |
+      docker images | grep "flask-app"
 
   - type: Command
     name: Push Image to Artifact Registry
