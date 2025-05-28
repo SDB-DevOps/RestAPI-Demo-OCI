@@ -73,13 +73,6 @@ steps:
 
 
   - type: Command
-    name: "Login to Artifact Registry"
-    command: |
-      # 显式指定域名解析超时时间
-      echo "nameserver 8.8.8.8" > /etc/resolv.conf  # 临时使用公共DNS（测试用）
-      echo "${AUTH_TOKEN}" | docker login -u "nrcfeuv8jnfa/${OCI_USERNAME}" nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com
-
-  - type: Command
     name: "Push Image to Artifact Registry"
     command: |
       # 推送镜像到目标仓库
