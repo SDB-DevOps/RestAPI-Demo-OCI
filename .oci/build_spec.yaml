@@ -14,6 +14,8 @@ env:
     TARGET_TENANCY_NAMESPACE: "nrcfeuv8jnfa"  # 通常与源相同
     TARGET_REPO_NAME: "artifact-repository-sdb"  # 替换为目标仓库名称
 
+    IMAGE_TAG: 1.0
+
     OCI_USERNAME: "rui.br.bao@ibm.com"
 
 steps:
@@ -67,18 +69,18 @@ steps:
     name: Retag Image for Artifact Registry
     command: |
       # 重打标签（指向Artifact Registry）
-      docker tag ${SOURCE_REPO_NAME} ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:latest
+      docker tag ${SOURCE_REPO_NAME}:latest ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:${IMAGE_TAG}
 
   - type: Command
     name: Push Image to Artifact Registry
     command: |
       # 推送镜像到目标仓库
-      docker push ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:latest
+      docker push ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:${IMAGE_TAG}
 
 outputArtifacts:
   - name: artifact-repository-sdb
     type: DOCKER_IMAGE
-    location: nrt.ocir.io/nrcfeuv8jnfa/flask-app:latest
+    location: nrt.ocir.io/nrcfeuv8jnfa/${SOURCE_REPO_NAME}:${IMAGE_TAG}
   
 
 
