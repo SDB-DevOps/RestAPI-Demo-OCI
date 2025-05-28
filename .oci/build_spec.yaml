@@ -49,38 +49,38 @@ steps:
   - type: Command
     name: Build Docker Image
     command: |
-      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:latest .
+      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:latest .
       docker image
 
   - type: Command
     name: Push to Container Registry
     command: |
       echo $AUTH_TOKEN | docker login ${REGISTRY} -u "${TENANCY_NAMESPACE}/${USERNAME}" --password-stdin
-      docker push ${REGISTRY}/${TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:latest
+      docker push ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app:latest
 
   - type: Command
     name: Pull Image from OCIR
     command: |
       # 从源仓库拉取镜像
-      docker pull ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}:latest
+      docker pull ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/flask-app:latest
       docker images | grep ${SOURCE_REPO_NAME}
 
   - type: Command
     name: Retag Image for Artifact Registry
     command: |
       # 重打标签（指向Artifact Registry）
-      docker tag ${SOURCE_REPO_NAME}:latest ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:${IMAGE_TAG}
+      docker tag flask-app:latest ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}/flask-app:1.0
 
   - type: Command
     name: Push Image to Artifact Registry
     command: |
       # 推送镜像到目标仓库
-      docker push ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${SOURCE_REPO_NAME}/${SOURCE_REPO_NAME}:${IMAGE_TAG}
+      docker push ${SOURCE_REGION}.ocir.io/${SOURCE_TENANCY_NAMESPACE}/${TARGET_REPO_NAME}/flask-app:1.0
 
 outputArtifacts:
   - name: artifact-repository-sdb
     type: DOCKER_IMAGE
-    location: nrt.ocir.io/nrcfeuv8jnfa/${SOURCE_REPO_NAME}:${IMAGE_TAG}
+    location: nrt.ocir.io/nrcfeuv8jnfa/${TARGET_REPO_NAME}/flask-app:1.0
   
 
 
