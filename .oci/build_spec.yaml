@@ -40,7 +40,12 @@ steps:
       docker --version
       which docker
 
-
+  - type: Command
+    name: "Login to Docker Hub"
+    command: |
+      echo dckr_pat_KvAupgmOJz4RMkHRNWkWaSuQtfI | docker login -u testbaor --password-stdin
+    timeoutInSeconds: 30
+    
   # Step 3: 构建 Docker 镜像
   - type: Command
     name: "Build Docker Image"
