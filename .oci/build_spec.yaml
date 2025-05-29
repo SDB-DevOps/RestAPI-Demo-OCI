@@ -85,7 +85,7 @@ outputArtifacts:
   # 输出 Docker 镜像信息
   - name: DOCKER_IMAGE
     type: DOCKER_IMAGE
-    location: ap-tokyo-1/nrcfeuv8jnfa/flask-app-1:latest
+    location: ap-tokyo-1.ocir.io/nrcfeuv8jnfa/flask-app-1:latest
 
   # 输出构建信息（如版本号）
   - name: BUILD_INFO
