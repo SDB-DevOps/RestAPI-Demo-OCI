@@ -53,6 +53,11 @@ steps:
       docker build -t ap-tokyo-1.ocir.io/${TENANCY_NAMESPACE}/flask-app-1:latest .
     timeoutInSeconds: 1800
 
+  - type: Command
+    name: Verify docker image
+    command: |
+      docker images | grep "flask-app-1"
+
   # Step 4: 推送 Docker 镜像到 OCIR
   - type: Command
     name: "Push Docker Image"
