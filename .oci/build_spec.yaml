@@ -20,6 +20,27 @@ steps:
   #     git checkout ${BRANCH_NAME}
   #   timeoutInSeconds: 600
 
+  - type: Command
+    name: Build
+    description: Install Dependencies
+    command: |
+      sudo yum install -y python3 python3-pip docker
+      pip3 install -r app/requirements.txt pytest
+      python3 --version
+      pip3 --version
+
+  - type: Command
+    name: Run Tests
+    command: |
+      pytest tests/ --cov=app --junitxml=test-results/results.xml
+
+  - type: Command
+    name: Check Docker Installation
+    command: |
+      docker --version
+      which docker
+
+
   # Step 3: 构建 Docker 镜像
   - type: Command
     name: "Build Docker Image"
