@@ -24,7 +24,6 @@ steps:
   - type: Command
     name: "Build Docker Image"
     command: |
-      cd /app
       docker build -t ap-tokyo-1.ocir.io/${TENANCY_NAMESPACE}/flask-app:latest .
     timeoutInSeconds: 1800
 
