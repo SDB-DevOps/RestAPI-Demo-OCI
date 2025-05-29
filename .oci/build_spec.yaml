@@ -84,7 +84,8 @@ steps:
       echo "${AUTH_TOKEN}" | docker login \
         -u "${SOURCE_TENANCY_NAMESPACE}/${USERNAME}" \
         --password-stdin \
-        nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com
+        artifact.ap-tokyo-1.oci.oraclecloud.com
+        # nrt.artifacts.ap-tokyo-1.oci.oraclecloud.com
 
   - type: Command
     name: Retag Image for Artifact Registry
