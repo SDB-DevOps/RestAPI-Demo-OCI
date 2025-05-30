@@ -25,7 +25,7 @@ steps:
       which docker
 
   - type: Command
-    name: "Build Docker Image"
+    name: Build Docker Image
     command: |
       docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest .
     timeoutInSeconds: 1800
