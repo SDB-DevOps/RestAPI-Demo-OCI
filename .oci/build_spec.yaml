@@ -46,7 +46,8 @@ steps:
   - type: Command
     name: Save Image
     command: |
-      docker save -o flask-app-image.tar flask-app-python:latest
+      docker save -o flask-app-image.tar ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest
       echo $?
       ls -lh flask-app-image.tar
-      file image.tar
+      file flask-app-image.tar
+
