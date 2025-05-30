@@ -50,4 +50,3 @@ steps:
       echo $?
       ls -lh flask-app-image.tar
       file flask-app-image.tar
-
