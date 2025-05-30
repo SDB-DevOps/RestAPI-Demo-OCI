@@ -44,11 +44,9 @@ steps:
       docker images | grep flask-app-python
 
   - type: Command
-    name: Retag Image
+    name: Save Image
     command: |
-      docker tag ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest ${REGISTRY}/${TENANCY_NAMESPACE}/artifact-repository-sdb/flask-app-artifact:V1.0
-
-  - type: Command
-    name: Push Image to Artifact Registry
-    command: |
-      docker push ${REGISTRY}/${TENANCY_NAMESPACE}/artifact-repository-sdb/flask-app-artifact:V1.0
+      docker save -o flask-app-image.tar flask-app-python:latest
+      echo $?
+      ls -lh flask-app-image.tar
+      file image.tar
