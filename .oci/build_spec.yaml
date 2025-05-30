@@ -55,8 +55,8 @@ steps:
       oci artifacts generic artifact upload \
         --compartment-id ocid1.tenancy.oc1..aaaaaaaalf3yetsmgmcmw2ifiscdsfs5hql22ajrelsadp3uypkc7pag4hra \
         --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
-        --display-name "artifact-test" \
-        --artifact-path flask-app.tar \
+        --display-name "flask-app" \
+        --artifact-path flask-app-image.tar \
         --version "V1.0"
 
 
