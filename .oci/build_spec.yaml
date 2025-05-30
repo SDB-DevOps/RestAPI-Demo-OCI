@@ -70,9 +70,8 @@ steps:
       oci artifacts generic artifact upload-by-path \
         --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
         --artifact-path "docker-images-666" \
-        --artifact-version "1.0.6" \  # 时间戳确保版本唯一
+        --artifact-version "1.0.6" \
         --content-body /workspace/SDB_TestDemo/flask-app-image.tar
-      oci artifacts generic artifact upload-by-path -h
       
       # # 3. 验证结果
       # oci artifacts generic artifact list \
