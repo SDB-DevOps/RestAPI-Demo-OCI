@@ -12,7 +12,9 @@ steps:
       pip3 install -r app/requirements.txt pytest
       python3 --version
       pip3 --version
-
+      sudo yum install -y python3-oci-cli
+      oci --version
+  
   - type: Command
     name: Run Tests
     command: |
@@ -50,3 +52,15 @@ steps:
       echo $?
       ls -lh flask-app-image.tar
       file flask-app-image.tar
+      oci artifacts generic artifact upload \
+        --compartment-id ocid1.tenancy.oc1..aaaaaaaalf3yetsmgmcmw2ifiscdsfs5hql22ajrelsadp3uypkc7pag4hra \
+        --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
+        --display-name "artifact-repository-sdb" \
+        --artifact-path flask-app.tar \
+        --version "V1.0"
+
+
+
+
+
+      
