@@ -4,22 +4,6 @@ timeoutInSeconds: 3600
 runAs: root
 
 steps:
-  # Step 1: 登录到 OCI Artifact Registry / OCIR
-  - type: Command
-    name: "Login to OCIR"
-    command: |
-      echo "${AUTH_TOKEN}" | docker login -u "${TENANCY_NAMESPACE}/${USERNAME}" --password-stdin ap-tokyo-1.ocir.io
-    timeoutInSeconds: 300
-
-  # # Step 2: 拉取代码（如果使用 OCI Code Repository）
-  # - type: Command
-  #   name: "Clone Git Repository"
-  #   command: |
-  #     git clone ${OCI_CODE_REPO_URL} /app
-  #     cd /app
-  #     git checkout ${BRANCH_NAME}
-  #   timeoutInSeconds: 600
-
   - type: Command
     name: Build
     description: Install Dependencies
@@ -41,53 +25,20 @@ steps:
       which docker
 
   - type: Command
-    name: "Login to Docker Hub"
-    command: |
-      echo dckr_pat_KvAupgmOJz4RMkHRNWkWaSuQtfI | docker login -u testbaor --password-stdin
-    timeoutInSeconds: 30
-    
-  # Step 3: 构建 Docker 镜像
-  - type: Command
     name: "Build Docker Image"
     command: |
-      docker build -t ap-tokyo-1.ocir.io/${TENANCY_NAMESPACE}/flask-app-1:latest .
+      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest .
     timeoutInSeconds: 1800
 
   - type: Command
-    name: Verify docker image
+    name: Push to Container Registry
     command: |
-      docker images | grep "flask-app-1"
+      echo $AUTH_TOKEN | docker login ${REGISTRY} -u "${TENANCY_NAMESPACE}/${USERNAME}" --password-stdin
+      docker push ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest
 
-  # Step 4: 推送 Docker 镜像到 OCIR
   - type: Command
-    name: "Push Docker Image"
+    name: Pull Image from OCIR
     command: |
-      docker push ap-tokyo-1.ocir.io/${TENANCY_NAMESPACE}/flask-app-1:latest
-    timeoutInSeconds: 1200
-
-  # # Step 5: (可选) 运行单元测试
-  # - type: Command
-  #   name: "Run Unit Tests"
-  #   command: |
-  #     cd /app
-  #     npm install
-  #     npm test
-  #   timeoutInSeconds: 600
-
-  # Step 6: (可选) 生成构建信息（如版本号）
-  - type: Command
-    name: "Generate Build Info"
-    command: |
-      echo "BUILD_VERSION=latest" >> build.env
-    timeoutInSeconds: 30
-
-outputArtifacts:
-  # 输出 Docker 镜像信息
-  - name: DOCKER_IMAGE
-    type: DOCKER_IMAGE
-    location: ap-tokyo-1.ocir.io/nrcfeuv8jnfa/flask-app-1:latest
-
-  # 输出构建信息（如版本号）
-  - name: BUILD_INFO
-    type: BINARY
-    location: build.env
+      # 从源仓库拉取镜像
+      docker pull ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest
+      docker images | grep flask-app-python
