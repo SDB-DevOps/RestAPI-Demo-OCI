@@ -56,14 +56,27 @@ steps:
   - type: Command
     name: Upload Image to Artifact Registry
     command: |    
-      oci artifacts generic artifact upload \
+      # oci artifacts generic artifact upload \
+      #   --compartment-id ocid1.tenancy.oc1..aaaaaaaalf3yetsmgmcmw2ifiscdsfs5hql22ajrelsadp3uypkc7pag4hra \
+      #   --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
+      #   --display-name "flask-app" \
+      #   --artifact-path flask-app-image.tar \
+      #   --version "1.0.0"
+
+      LOCAL_FILE="$(pwd)/flask-app-image.tar"
+      echo "本地文件路径: $LOCAL_FILE"
+
+      # 2. 使用官方推荐命令上传
+      oci artifacts generic artifact upload-by-path \
+        --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
+        --artifact-path "docker-images/flask-app-image.tar" \
+        --artifact-version "1.0.$(date +%s)" \  # 时间戳确保版本唯一
+        --content-body "$LOCAL_FILE"
+
+      # 3. 验证结果
+      oci artifacts generic artifact list \
         --compartment-id ocid1.tenancy.oc1..aaaaaaaalf3yetsmgmcmw2ifiscdsfs5hql22ajrelsadp3uypkc7pag4hra \
         --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
-        --display-name "flask-app" \
-        --artifact-path flask-app-image.tar \
-        --version "1.0.0"
-        --debug
-      echo $?
 
 
 
