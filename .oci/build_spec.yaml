@@ -52,6 +52,10 @@ steps:
       echo $?
       ls -lh flask-app-image.tar
       file flask-app-image.tar
+      
+  - type: Command
+    name: upload Image to artifact
+    command: |    
       oci artifacts generic artifact upload \
         --compartment-id ocid1.tenancy.oc1..aaaaaaaalf3yetsmgmcmw2ifiscdsfs5hql22ajrelsadp3uypkc7pag4hra \
         --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
@@ -59,7 +63,8 @@ steps:
         --artifact-path flask-app-image.tar \
         --version "V1.0"
 
-
+      oci artifacts generic artifact list \
+        --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq
 
 
 
