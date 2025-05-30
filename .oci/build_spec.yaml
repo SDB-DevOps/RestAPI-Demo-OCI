@@ -42,3 +42,13 @@ steps:
       # 从源仓库拉取镜像
       docker pull ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest
       docker images | grep flask-app-python
+
+  - type: Command
+    name: Retag Image
+    command: |
+      docker tag ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest ${REGISTRY}/${TENANCY_NAMESPACE}/artifact-repository-sdb/flask-app-artifact:V1.0
+
+  - type: Command
+    name: Push Image to Artifact Registry
+    command: |
+      docker push ${REGISTRY}/${TENANCY_NAMESPACE}/artifact-repository-sdb/flask-app-artifact:V1.0
