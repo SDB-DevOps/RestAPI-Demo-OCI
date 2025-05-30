@@ -61,7 +61,7 @@ steps:
         --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
         --display-name "flask-app" \
         --artifact-path flask-app-image.tar \
-        --version "V1.0"
+        --version "1.0.0"
         --debug
         
       oci artifacts generic artifact list \
