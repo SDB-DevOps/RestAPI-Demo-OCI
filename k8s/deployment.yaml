@@ -1,27 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: python-api
-  labels:
-    app: python-api
+  name: flask-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: python-api
+      app: flask-app
   template:
     metadata:
       labels:
-        app: python-api
+        app: flask-app
     spec:
       containers:
-      - name: python-api
-        image: iad.ocir.io/<tenancy-namespace>/python-api:${BUILD_NUMBER}
+      - name: flask-app
+        image: nrt.ocir.io/<tenancy-namespace>/flask-app:${BUILD_NUMBER}
         ports:
         - containerPort: 8000
-        envFrom:
-        - secretRef:
-            name: python-api-secrets
+        env:
+        - name: FLASK_ENV
+          value: "production"
         resources:
           requests:
             cpu: "100m"
@@ -29,9 +27,3 @@ spec:
           limits:
             cpu: "500m"
             memory: "512Mi"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8000
-          initialDelaySeconds: 30
-          periodSeconds: 10
