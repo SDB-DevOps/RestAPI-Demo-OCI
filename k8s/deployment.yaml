@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-app
+  name: flask-app-python
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: flask-app
+      app: flask-app-python
   template:
     metadata:
       labels:
-        app: flask-app
+        app: flask-app-python
     spec:
       containers:
-      - name: flask-app
-        image: nrt.ocir.io/<tenancy-namespace>/flask-app:${BUILD_NUMBER}
+      - name: flask-app-python
+        image: nrt.ocir.io/nrcfeuv8jnfa/flask-app-python:latest
         ports:
         - containerPort: 8000
         env:
