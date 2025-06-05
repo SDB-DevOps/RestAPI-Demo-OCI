@@ -70,7 +70,7 @@ steps:
       oci artifacts generic artifact upload-by-path \
         --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
         --artifact-path "flask-app-image" \
-        --artifact-version "0.1" \
+        --artifact-version "0.2" \
         --content-body ${LOCAL_FILE}
         # --content-body /workspace/SDB_TestDemo/flask-app-image.tar
       
