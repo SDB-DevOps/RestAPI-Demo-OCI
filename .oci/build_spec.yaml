@@ -41,7 +41,6 @@ steps:
   - type: Command
     name: Pull Image from OCIR
     command: |
-      # 从源仓库拉取镜像
       docker pull ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest
       docker images | grep flask-app-python
 
@@ -49,7 +48,7 @@ steps:
     name: Save Image
     command: |
       docker save -o flask-app-image.tar ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest
-      echo $?
+      # echo $?
       ls -lh flask-app-image.tar
       file flask-app-image.tar
       
@@ -64,9 +63,8 @@ steps:
       #   --version "1.0.0"
 
       LOCAL_FILE="$(pwd)/flask-app-image.tar"
-      echo "本地文件路径: $LOCAL_FILE"
+      echo "localPath: $LOCAL_FILE"
 
-      # 2. 使用官方推荐命令上传
       oci artifacts generic artifact upload-by-path \
         --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
         --artifact-path "flask-app-image" \
@@ -74,7 +72,6 @@ steps:
         --content-body ${LOCAL_FILE}
         # --content-body /workspace/SDB_TestDemo/flask-app-image.tar
       
-      # # 3. 验证结果
       # oci artifacts generic artifact list \
       #   --compartment-id ocid1.tenancy.oc1..aaaaaaaalf3yetsmgmcmw2ifiscdsfs5hql22ajrelsadp3uypkc7pag4hra \
       #   --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
