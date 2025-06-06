@@ -29,28 +29,28 @@ steps:
   - type: Command
     name: Build Docker Image
     command: |
-      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest .
+      docker build -t ${REGISTRY}/${TENANCY_NAMESPACE}/flask_app_python:latest .
     timeoutInSeconds: 1800
 
   - type: Command
     name: Push to Container Registry
     command: |
       echo $AUTH_TOKEN | docker login ${REGISTRY} -u "${TENANCY_NAMESPACE}/${USERNAME}" --password-stdin
-      docker push ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest
+      docker push ${REGISTRY}/${TENANCY_NAMESPACE}/flask_app_python:latest
 
   - type: Command
     name: Pull Image from OCIR
     command: |
-      docker pull ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest
-      docker images | grep flask-app-python
+      docker pull ${REGISTRY}/${TENANCY_NAMESPACE}/flask_app_python:latest
+      docker images | grep flask_app_python
 
   - type: Command
     name: Save Image
     command: |
-      docker save -o flask-app-image.tar ${REGISTRY}/${TENANCY_NAMESPACE}/flask-app-python:latest
+      docker save -o flask_app_image.tar ${REGISTRY}/${TENANCY_NAMESPACE}/flask_app_python:latest
       # echo $?
-      ls -lh flask-app-image.tar
-      file flask-app-image.tar
+      ls -lh flask_app_image.tar
+      file flask_app_image.tar
       
   - type: Command
     name: Upload Image to Artifact Registry
@@ -58,19 +58,19 @@ steps:
       # oci artifacts generic artifact upload \
       #   --compartment-id ocid1.tenancy.oc1..aaaaaaaalf3yetsmgmcmw2ifiscdsfs5hql22ajrelsadp3uypkc7pag4hra \
       #   --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
-      #   --display-name "flask-app" \
-      #   --artifact-path flask-app-image.tar \
+      #   --display-name "flask_app" \
+      #   --artifact-path flask_app_image.tar \
       #   --version "1.0.0"
 
-      LOCAL_FILE="$(pwd)/flask-app-image.tar"
+      LOCAL_FILE="$(pwd)/flask_app_image.tar"
       echo "localPath: $LOCAL_FILE"
 
       oci artifacts generic artifact upload-by-path \
         --repository-id ocid1.artifactrepository.oc1.ap-tokyo-1.0.amaaaaaa5w4457ian6bqbuyo7vj2ujyxwxceruuhwwov73cflf625xqy3kjq \
-        --artifact-path "flask-app-image" \
+        --artifact-path "flask_app_image" \
         --artifact-version "0.3" \
         --content-body ${LOCAL_FILE}
-        # --content-body /workspace/SDB_TestDemo/flask-app-image.tar
+        # --content-body /workspace/SDB_TestDemo/flask_app_image.tar
       
       # oci artifacts generic artifact list \
       #   --compartment-id ocid1.tenancy.oc1..aaaaaaaalf3yetsmgmcmw2ifiscdsfs5hql22ajrelsadp3uypkc7pag4hra \
